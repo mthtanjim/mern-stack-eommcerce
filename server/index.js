@@ -18,7 +18,6 @@ mongoose
   .then(() => console.log("Databse Connected"))
   .catch((err) => console.log("DB Error =", ));
 
-
 //middleware
 app.use(morgan("dev"))
 app.use(express.json()) 
