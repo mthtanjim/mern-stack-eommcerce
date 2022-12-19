@@ -11,8 +11,8 @@ const app = express();
 dotenv.config()
 // const users = require('./routes/users');
 // const { default: router } = require("./routes/auth.js");
-
 //db
+
 mongoose
   .connect(process.env.DBURL)
   .then(() => console.log("Databse Connected"))
@@ -23,9 +23,8 @@ app.use(morgan("dev"))
 app.use(express.json()) 
 
 //router middleware
-app.use("/api", authRoutes)
+app.use("/", authRoutes)
 app.use("/category", category)
-
 
 const port = process.env.PORT || 8000;
 
