@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv")
 const authRoutes = require('./routes/auth')
 const category = require('./routes/category')
+const products = require('./routes/products')
 const morgan = require("morgan")
 
 //import express from 'express'
@@ -25,6 +26,7 @@ app.use(express.json())
 //router middleware
 app.use("/", authRoutes)
 app.use("/category", category)
+app.use("/products", products)
 
 const port = process.env.PORT || 8000;
 

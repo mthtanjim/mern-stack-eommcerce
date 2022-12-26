@@ -8,7 +8,7 @@ const requireSignin = (req, res, next) => {
       process.env.JWT_SECRET
     );
     // console.log('decode =>', decode)
-    req.user = decoded;
+    req.decoded = decoded;
     next();
   } catch (err) {
     return res.status(401).json(err);
@@ -16,8 +16,8 @@ const requireSignin = (req, res, next) => {
 };
 
 const isAdmin = async (req, res, next) => {
-  const user = await User.findById(req.user._id)
-  if (user !== 1) {
+  const user = await User.findById(req.decoded)
+  if (user.role !== 1) {
     res.status(401).send("Unauthorized")
   } else {
     next()

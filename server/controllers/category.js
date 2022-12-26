@@ -5,11 +5,11 @@ const create = async (req, res) => {
   try {
     const { name } = req.body;
     if (!name.trim()) {
-      return res.json({ error: "name is required" });
+      return res.json({ error: "name is required" });  
     }
-    const existingCategory = await Category.findOne({ name });
-    if (existingCategory) {
-      return res.json({ error: "Already Exists" });
+    const existingCategory = await Category.findOne({ name });  
+    if (existingCategory) {   
+      return res.json({ error: "Already Exists" });   
     }
 
     const category = await new Category({ name, slug: slugify(name) }).save();
@@ -21,11 +21,16 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const id = req.body;
-    const data = await Category.findOne(id);
-    if (!data) {
-      res.json({ error: "Something Wrong" });
-    }
+    const {name} = req.body;
+    const {category} = await Category.findByIdAndUpdate(
+      req.params.categoryId,
+      {
+        name,
+        slug: slugify(name),
+      },
+      { new: true }
+    );
+    res.json({category});
   } catch (err) {
     console.log(err);
     return res.status(400).json(err);
@@ -33,9 +38,9 @@ const update = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-    const one = await Category.findOneAndDelete(req.params.id)
+  const removed = await Category.findOneAndDelete(req.params.categoryId);
+  res.json({deleted: removed});
   try {
-
   } catch (err) {
     console.log(err);
     res.status(400).json(err.message);
@@ -44,7 +49,6 @@ const remove = async (req, res) => {
 
 const list = async (req, res) => {
   try {
-    
     const all = await Category.find({});
     res.json(all);
   } catch (err) {
@@ -55,9 +59,8 @@ const list = async (req, res) => {
 
 const read = async (req, res) => {
   try {
-    const slug = await Category.findOne({slug: req.params.slug})
-    return res.json(slug)
-
+    const catagory = await Category.findOne({ slug: req.params.slug });
+    return res.json(catagory);
   } catch (err) {
     console.log(err);
     res.status(400).json(err.message);
