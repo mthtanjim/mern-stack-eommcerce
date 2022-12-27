@@ -4,10 +4,10 @@ const fs = require("fs");
 
 const CreateProduct = async (req, res) => {
   try {
-    const { name, description, price, shipping, catagory, quantity } =
+    const { name, description, price, shipping, category, quantity } =
       req.fields;
     const { photo } = req.files;
-    console.log(name, description, price, shipping, catagory, quantity);
+    console.log(name, description, price, shipping, category, quantity);
 
     //validation
     switch (true) {
@@ -19,7 +19,7 @@ const CreateProduct = async (req, res) => {
         res.json({ error: "price is required " });
       case !shipping.trim():
         res.json({ error: "shipping is required " });
-      case !catagory.trim():
+      case !category.trim():
         res.json({ error: "Cateagory is required " });
       case !quantity.trim():
         res.json({ error: "quantity is required " });
@@ -42,9 +42,10 @@ const CreateProduct = async (req, res) => {
   }
 };
 
-const getProduct = async (req, res) => {
+const list = async (req, res) => {
   try {
     const products = await Product.find({})
+      .populate("category")
       .select("-photo")
       .limit(12)
       .sort({ createdAt: -1 });
@@ -55,16 +56,43 @@ const getProduct = async (req, res) => {
   }
 };
 
-const singleProduct = async (req, res) => {
-  try{
-    const products = await Product.findById(_id).select(-photo) 
-    res.json(products) 
-  }catch(err) {
-    res.json({message: err})
+const read = async (req, res) => {
+  try {
+    const products = await Product.findOne({ slug: req.params.slug })
+      .select("-photo")
+      .populate("category");
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.json({ message: err });
   }
-  
-}
+};
 
+const photo = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.productId).select(
+      "photo"
+    );
+    console.log("product =>", product.photo.contentType);
+    if (product.photo.data) {
+      res.set("Content-Type", product.photo.contentType);
+      return res.send(product.photo.data);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(200).json({ error: err });
+  }
+};
 
+const remove = async (req, res) => {
+  try {
+    const remoted = await Product.findByIdAndDelete(req.params.productId).select("-photo")
+    res.status(200).json(remoted)
+  } catch (err) {
+    console.log(err);
+    res.send({"message": err})
+  }
+};
 
-module.exports = { CreateProduct, getProduct, singleProduct };
+module.exports = { CreateProduct, list, read, photo, remove };
