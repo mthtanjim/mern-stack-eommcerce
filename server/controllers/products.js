@@ -42,6 +42,52 @@ const CreateProduct = async (req, res) => {
   }
 };
 
+const UpdateProduct = async (req, res) => {
+  try {
+    const { name, description, price, shipping, category, quantity } =
+      req.fields;
+    const { photo } = req.files;
+    console.log(name, description, price, shipping, category, quantity);
+
+    //validation
+    switch (true) {
+      case !name.trim():
+        res.json({ error: "name is required " });
+      case !description.trim():
+        res.json({ error: "description is required " });
+      case !price.trim():
+        res.json({ error: "price is required " });
+      case !shipping.trim():
+        res.json({ error: "shipping is required " });
+      case !category.trim():
+        res.json({ error: "Cateagory is required " });
+      case !quantity.trim():
+        res.json({ error: "quantity is required " });
+      case photo && photo.size > 600000:
+        res.json({ error: "Photo size should be less than 600kb" });
+    }
+
+    //update product
+    const product = await Product.findByIdAndUpdate(
+      req.params.productId,
+      {
+        ...req.fields,
+        slug: slugify(name),
+      },
+      { new: true }
+    );
+    if (photo) {
+      product.photo.data = fs.readFileSync(photo.path);
+      product.photo.contentType = photo.type;
+    }
+    await product.save();
+    res.json(product)
+  } catch (err) {
+    console.log("create Product---------", err);
+    res.status(400).send(err);
+  }
+};
+
 const list = async (req, res) => {
   try {
     const products = await Product.find({})
@@ -87,12 +133,14 @@ const photo = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const remoted = await Product.findByIdAndDelete(req.params.productId).select("-photo")
-    res.status(200).json(remoted)
+    const remoted = await Product.findByIdAndDelete(
+      req.params.productId
+    ).select("-photo");
+    res.status(200).json(remoted);
   } catch (err) {
     console.log(err);
-    res.send({"message": err})
+    res.send({ message: err });
   }
 };
 
-module.exports = { CreateProduct, list, read, photo, remove };
+module.exports = { CreateProduct, UpdateProduct, list, read, photo, remove };
