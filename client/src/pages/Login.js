@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
+import Jumbotron from "../components/cards/Jumbotron";
 
 const Login = () => {
   return (
-    <div><h1>Login with details</h1></div>
-  )
-}
+    <div>
+      <Jumbotron
+        title="Please login first "
+        subTitle="Login with your currect information and credentials"
+      />
+      <h1>Login with details</h1>
+    </div>
+  );
+};
 
-export default Login
+export default Login;

@@ -5,10 +5,11 @@ const authRoutes = require('./routes/auth')
 const category = require('./routes/category')
 const products = require('./routes/products')
 const morgan = require("morgan")
+const cors = require("cors")
 
 //import express from 'express'
 const app = express();
-
+app.use(cors())
 dotenv.config()
 // const users = require('./routes/users');
 // const { default: router } = require("./routes/auth.js");
