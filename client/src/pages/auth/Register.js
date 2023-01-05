@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Jumbotron from "../components/cards/Jumbotron";
+import Jumbotron from "../../components/cards/Jumbotron";
 import axios from "axios"
-import toast, {Toaster} from "react-hot-toast"
+import toast from "react-hot-toast"
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -32,7 +32,6 @@ const Register = () => {
   return (
     <div>
       <Jumbotron title="Register " />
-      <Toaster/>
       <div className="container">
         <div className="row">
           <div className="col-md-6 offset-md-3 ">
