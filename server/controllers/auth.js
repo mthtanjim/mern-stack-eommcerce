@@ -62,14 +62,12 @@ const login = async (req, res) => {
     if (!password || password.lenth > 6) {
       return res.json({ error: "password not valied" });
     }
-
     //3. check if email is taken
     const user = await User.findOne({ email });
     if (!user) {
       console.log("esists", existsUser);
       return res.json({ error: "user not found" });
     }
-
     //4. compare password
     const match = await comparePassword(password, user.password);
     if (!match) {
@@ -79,6 +77,7 @@ const login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "3d",
     });
+    console.log("token: => ", token)
     //send response
     res.json({
       user: {
@@ -94,7 +93,17 @@ const login = async (req, res) => {
   }
 };
 
+const users = async (req, res) => {
+  try {
+    const user = await User.find({})
+    res.status(200).json({user})
+  }catch(err) {
+    console.log("error from test get users", err)
+  }
+}
+
+
 const secret = async (req, res, next) => 
 res.json({ currentUser: req.user });
 
-module.exports = { register, login, secret };
+module.exports = { register, login, users, secret };

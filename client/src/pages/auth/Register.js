@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from "react";
 import Jumbotron from "../../components/cards/Jumbotron";
-import axios from "axios"
-import toast from "react-hot-toast"
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
   const handleSubmit = async (e) => {
     try {
-      e.preventDefault()
-
-      const {data} = await axios.post(`${process.env.REACT_APP_API}/register`, {name, email, password})
-      console.log(data) 
-
-      if(data?.error) {
-        toast.error(data.error) 
+      e.preventDefault();
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_API}/register`,
+        { name, email, password }
+      );
+      console.log(data);
+      if (data?.error) {
+        toast.error(data.error);
       } else {
-        
-         toast.success("Registration success")
-      } 
-
-    }catch(err) {
-      toast.error("Registration faild, Try again ")
-      console.log(err)
+        toast.success("Registration success");
+      }
+    } catch (err) {
+      toast.error("Registration faild, Try again ");
+      console.log(err);
     }
   };
 
@@ -57,8 +55,7 @@ const Register = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button
-              className="btn btn-primary">Submit</button>
+              <button className="btn btn-primary">Submit</button>
             </form>
           </div>
         </div>

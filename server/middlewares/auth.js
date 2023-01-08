@@ -23,7 +23,9 @@ const isAdmin = async (req, res, next) => {
     next()
   }
 }; 
+
+
   
-module.exports = { requireSignin, isAdmin };
+module.exports = { requireSignin, isAdmin};
 
 

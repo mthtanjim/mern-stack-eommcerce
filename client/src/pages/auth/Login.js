@@ -3,14 +3,15 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Jumbotron from "../../components/cards/Jumbotron";
-import { useAuth  } from "../../context/auth";
+import { useAuth } from "../../context/auth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
-  const [Auth, setAuth] = useAuth()
+  //hook 
+  const [Auth, setAuth] = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +24,9 @@ const Login = () => {
       if (data?.error) {
         toast.error(data.error);
       } else {
-        setAuth({...Auth, token: data.token, user: data.user})
+        setAuth({ ...Auth, token: data.token, user: data.user });
         toast.success("Login success");
       }
-
-  
-      
       // navigate("/");
     } catch (err) {
       console.log(err);

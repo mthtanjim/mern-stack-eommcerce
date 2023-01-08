@@ -4,10 +4,11 @@ const router = express.Router()
 //middlewares
 const {requireSignin, isAdmin} = require("../middlewares/auth")
 //controllers
-const {register, login, secret} = require('../controllers/auth')
+const {register, login, users, secret} = require('../controllers/auth')
 
 router.post('/register', register)
-router.post('/login', login)
+router.post('/login', requireSignin, isAdmin, login)
+router.get('/users', users)
 
 //secret routes for testing
 router.get('/secret', requireSignin, isAdmin, secret)
