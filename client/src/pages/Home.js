@@ -9,7 +9,6 @@ const Home = () => {
   return (
     <div>
       <Jumbotron title="hello word title" subTitle="this is the subtitle of every page "/>
-      
       <h1>
         {auth.token}{JSON.stringify(auth, null, 4)}
       </h1>

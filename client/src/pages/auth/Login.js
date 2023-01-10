@@ -13,13 +13,15 @@ const Login = () => {
   //hook 
   const [Auth, setAuth] = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = axios.post(`${process.env.REACT_APP_API}/login`, {
+      const {data}  = await axios.post(`${process.env.REACT_APP_API}/login`, {
         email,
         password,
-      });
+      }
+      
+      );
       console.log("data => ", data);
       if (data?.error) {
         toast.error(data.error);
@@ -29,6 +31,7 @@ const Login = () => {
       }
       // navigate("/");
     } catch (err) {
+      
       console.log(err);
       toast.error("login failed, Try again");
     }

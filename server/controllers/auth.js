@@ -34,7 +34,7 @@ const register = async (req, res) => {
     const user = await new User({ name, email, password: hashedPass }).save();
     //6. create sign token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "3d",
+      expiresIn: "7d",
     });
 
     res.json({
@@ -75,7 +75,7 @@ const login = async (req, res) => {
     }
     //5. create sign token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "3d",
+      expiresIn: "7d",
     });
     console.log("token: => ", token)
     //send response
