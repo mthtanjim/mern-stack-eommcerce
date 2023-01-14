@@ -7,8 +7,8 @@ const {requireSignin, isAdmin} = require("../middlewares/auth")
 const {register, login, users, secret} = require('../controllers/auth')
 
 router.post('/register', register)
-router.post('/login', requireSignin, isAdmin, login)
-router.get('/users', users)
+router.post('/login', login)
+router.get('/users',requireSignin, isAdmin, users)
 
 // secret routes for testing
 router.get('/secret', requireSignin, isAdmin, secret)

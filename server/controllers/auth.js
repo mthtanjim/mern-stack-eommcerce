@@ -65,8 +65,8 @@ const login = async (req, res) => {
     //3. check if email is taken
     const user = await User.findOne({ email });
     if (!user) {
-      console.log("esists", existsUser);
-      return res.json({ error: "user not found" });
+      
+      return res.json({ error: "user not found.." });
     }
     //4. compare password
     const match = await comparePassword(password, user.password);
@@ -95,6 +95,7 @@ const login = async (req, res) => {
 
 const users = async (req, res) => {
   try {
+    console.log("curent users:=>", req.decoded)
     const user = await User.find({})
     res.status(200).json({user})
   }catch(err) {
@@ -103,7 +104,9 @@ const users = async (req, res) => {
 }
 
 
-const secret = async (req, res, next) => 
-res.json({ currentUser: req.user });
+const secret = async (req, res, next) => {
+  console.log("curent users:=>", req.decoded)
+  res.json({ currentUser: req.user });
+}
 
 module.exports = { register, login, users, secret };

@@ -10,8 +10,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
+  
   //hook 
-  const [Auth, setAuth] = useAuth();
+  const [auth, setAuth] = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,18 +21,17 @@ const Login = () => {
         email,
         password,
       }
-      
       );
-      console.log("data => ", data);
       if (data?.error) {
         toast.error(data.error);
       } else {
-        setAuth({ ...Auth, token: data.token, user: data.user });
+        localStorage.setItem("auth", JSON.stringify(data))
+        setAuth({ ...auth, token: data.token, user: data.user });
         toast.success("Login success");
+        navigate("/");
       }
-      // navigate("/");
-    } catch (err) {
       
+    } catch (err) {
       console.log(err);
       toast.error("login failed, Try again");
     }
