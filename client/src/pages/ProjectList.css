@@ -1,0 +1,72 @@
+.heading {
+    color: rgb(82, 189, 16);
+}
+
+.project-list {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.project-card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.project-card.expanded {
+    width: 90%;
+    height: auto;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: 1.2rem;
+}
+
+.project-details {
+
+    padding: 10px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-details-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+
+.project-detail-image {
+    width: auto;
+    height: auto;
+    margin-right: 10px;
+    object-fit: cover;
+}

@@ -1,0 +1,3 @@
+.zoom-on-scroll {
+    transition: transform 1.1s cubic-bezier(0.25, 0.1, 0.25, 1);
+}

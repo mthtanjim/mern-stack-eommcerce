@@ -105,7 +105,7 @@ const users = async (req, res) => {
 
 
 const secret = async (req, res, next) => {
-  console.log("curent users:=>", req.decoded)
+  // console.log("curent users:=>", req.decoded)
   res.json({ currentUser: req.user });
 }
 

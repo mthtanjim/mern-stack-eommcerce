@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.content {
+  width: 200%;
+  display: flex;
+  position: absolute;
+  left: 0;
+}
+
+.right-side-content {
+  cursor: pointer;
+}
