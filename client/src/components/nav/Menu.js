@@ -1,20 +1,19 @@
 import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import {useAuth} from "../../context/auth"
+import { useAuth } from "../../context/auth";
 
 const Menu = () => {
-  const navigate = useNavigate()
-  const [auth, setAuth] = useAuth()
+  const navigate = useNavigate();
+  const [auth, setAuth] = useAuth();
 
   const handleLogout = () => {
     setAuth({
       user: null,
-      token: ""
-    })
-    localStorage.removeItem("auth")
-    navigate("/login")
-    
-  }
+      token: "",
+    });
+    localStorage.removeItem("auth");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -25,25 +24,50 @@ const Menu = () => {
           </NavLink>
         </li>
 
-        {!auth?.user ? ( <>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/Login">
-            Login
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/Register">
-            Register
-          </NavLink>
-        </li>
-        </> ) : ( <li className="nav-item">
-          <a onClick={handleLogout} className="nav-link" to="/Register">
-            Logout
-          </a>
-        </li>
-        )
-        }
-         
+        {!auth?.user ? (
+          <>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/Login">
+                Login
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/Register">
+                Register
+              </NavLink>
+            </li>
+          </>
+        ) : (
+          <div className="dropdown">
+            <li>
+              <a
+                className="nav-link pointer dropdown-toggle"
+                data-bs-toggle="dropdown"
+              >
+                {auth?.user?.name?.toUpperCase()}
+              </a>
+
+              <ul className="dropdown-menu">
+                <li>
+                  <NavLink
+                    className="nav-link"
+                    to={`/dashboard/${
+                      auth?.user?.role === 1 ? "admin" : "user"
+                    }`}
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+
+                <li className="nav-item pointer">
+                  <a onClick={handleLogout} className="nav-link">
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </div>
+        )}
       </ul>
     </>
   );

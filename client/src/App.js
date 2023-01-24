@@ -11,7 +11,6 @@ import Secret from "./pages/Secret";
 
 function App() {
 
-
   return (
     <Router>
       <Menu/>
