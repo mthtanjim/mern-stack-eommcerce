@@ -12,7 +12,6 @@ const PrivateRoute = () => {
     const authCheck = async () => {
       const { data } = await axios.get(
         `/auth-check`);
-      console.log("get => ", data);
       if (data?.ok) {
         setOk(true);
       } else {
@@ -22,7 +21,7 @@ const PrivateRoute = () => {
     authCheck();
   }, [auth?.token]);
 
-  return ok ? <Outlet /> : <Loading />;
+  return ok ? <Outlet /> : <Loading path="user"/>;
 };
 
 export default PrivateRoute;

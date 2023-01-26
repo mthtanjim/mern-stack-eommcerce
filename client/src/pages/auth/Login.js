@@ -30,7 +30,8 @@ const Login = () => {
         setAuth({ ...auth, token: data.token, user: data.user });
         toast.success("Login success");
         
-        navigate(location.state || "/dashboard");
+        navigate(location.state || `/dashboard/${data?.user?.role === 1 ? "admin" : "user"}`);
+        
       }
       
     } catch (err) {

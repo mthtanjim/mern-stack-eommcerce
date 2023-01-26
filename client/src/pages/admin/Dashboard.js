@@ -1,10 +1,9 @@
 import { useAuth } from "../../context/auth";
 import Jumbotron from "../../components/cards/Jumbotron";
 import { NavLink } from "react-router-dom";
-import AdminMenu from "../../components/nav/AdminMenu";
 import UserMenu from "../../components/nav/UserMenu";
 
-const UserDashboard = () => {
+const AdminDashboard = () => {
   const [auth, setAuth] = useAuth();
 
   return (
@@ -19,11 +18,11 @@ const UserDashboard = () => {
             <UserMenu/>
           </div>
           <div className="col-9">
-            <div className=" p-3 mb-3 mt-3 h4 bg-light">User info</div>
+            <div className=" p-3 mb-3 mt-3 h4 bg-light">admin info</div>
             <ul className="list-group">
               <li className="list-group-item">{auth.user.name}</li>
               <li className="list-group-item">{auth.user.email}</li>
-              <li className="list-group-item">User </li>
+              <li className="list-group-item">admin</li>
             </ul>
           </div>
         </div>
@@ -32,4 +31,4 @@ const UserDashboard = () => {
   );
 };
 
-export default UserDashboard;
+export default AdminDashboard;
