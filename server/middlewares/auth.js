@@ -15,11 +15,14 @@ const requireSignin = (req, res, next) => {
 };
 
 const isAdmin = async (req, res, next) => {
-  const user = await User.findById(req.decoded);
-  if (user.role !== 1) {
-    res.status(401).send("Unauthorized..");
-  } else {
+
+const user = await User.findById(req.decoded);
+
+  if (user.role == 1) {
+    console.log("Condition is Okey")
     next();
+  } else {
+    res.status(401).send("Unauthorized..");
   }
 };
 

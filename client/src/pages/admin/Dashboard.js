@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/auth";
 import Jumbotron from "../../components/cards/Jumbotron";
 import { NavLink } from "react-router-dom";
-import UserMenu from "../../components/nav/UserMenu";
+import AdminMenu from "../../components/nav/AdminMenu";
 
 const AdminDashboard = () => {
   const [auth, setAuth] = useAuth();
@@ -15,7 +15,7 @@ const AdminDashboard = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-3 shadow-sm">
-            <UserMenu/>
+            <AdminMenu/>
           </div>
           <div className="col-9">
             <div className=" p-3 mb-3 mt-3 h4 bg-light">admin info</div>
