@@ -114,13 +114,12 @@ const read = async (req, res) => {
     res.json({ message: err });
   }
 };
-
+  //photo
 const photo = async (req, res) => {
   try {
     const product = await Product.findById(req.params.productId).select(
       "photo"
     );
-    console.log("product =>", product.photo.contentType);
     if (product.photo.data) {
       res.set("Content-Type", product.photo.contentType);
       return res.send(product.photo.data);

@@ -12,8 +12,10 @@ import NotFound from "./pages/NotFound";
 import Secret from "./pages/Secret";
 import AdminCategory from "./pages/admin/Category";
 import AdminProduct from "./pages/admin/Product";
+import AdminProductsUpdate from "./pages/admin/ProductUpdate";
 import UserOrders from "./pages/user/Orders";
 import UserProfile from "./pages/user/Profile";
+import AdminProducts from "./pages/admin/Products";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/product" element={<AdminProduct />} />
+          <Route path="admin/product/update/:slug" element={<AdminProductsUpdate />} />
+          <Route path="admin/products" element={<AdminProducts />} />
           <Route path="admin/category" element={<AdminCategory />} />
         </Route>
       </Routes>

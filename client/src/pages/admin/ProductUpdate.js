@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Descriptions, Select } from "antd";
 import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const { Option } = Select;
 
-const AdminProduct = () => {
+const AdminProductUpdate = () => {
   const [auth, setAuth] = useAuth();
   const [categories, setCategories] = useState([]);
 
@@ -21,11 +21,18 @@ const AdminProduct = () => {
   const [category, setCategory] = useState("");
   const [shipping, setShipping] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [id, setId] = useState("")
   const navigate = useNavigate()
+  const params = useParams()
+
+  useEffect(() => {
+    loadProduct();
+  }, []);
 
   useEffect(() => {
     loadCategories();
   }, []);
+
   const loadCategories = async () => {
     await axios
       .get("/category")
@@ -37,11 +44,29 @@ const AdminProduct = () => {
       });
   };
 
+  const loadProduct = async () => {
+    try { 
+        const {data} = await axios.get(`/products/${params.slug}`)
+        setName(data.name)
+        setDescription(data.description)
+        setPrice(data.price)
+        setQuantity(data.quantity)
+        setCategory(data.category._id)
+        setShipping(data.shipping)
+        setQuantity(data.quantity)
+        setId(data.name)
+        setPhoto(data.photo)
+        
+    }catch(err) {
+        console.log(err)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const productData = new FormData();
-      productData.append("photo", photo);
+      photo && productData.append("photo", photo);
       productData.append("name", name);
       productData.append("description", description);
       productData.append("price", price);
@@ -76,8 +101,8 @@ const AdminProduct = () => {
             <AdminMenu />
           </div>
           <div className="col-9">
-            <div className=" p-3 mb-3 mt-3 h4 bg-light">Carete Product</div>
-            {photo && (
+            <div className=" p-3 mb-3 mt-3 h4 bg-light">Update Product</div>
+            {photo ? (
               <div className="text-center ">
                 <img
                   src={URL.createObjectURL(photo)}
@@ -86,7 +111,19 @@ const AdminProduct = () => {
                   height="200px"
                 />
               </div>
-            )}
+            ) : ( 
+            <div className="text-center">
+            <img
+              src={`${
+                process.env.REACT_APP_API
+              }/products/photo/${id}}`}
+              alt="sobi"
+              className="img img-responsive"
+              height="200px"
+            />
+          </div>
+          )
+            }
             <div className="mt-3">
               <label className="btn btn-outline-secondary col-12 mb-3">
                 {photo ? photo.name : "Upload Photo"}
@@ -131,6 +168,7 @@ const AdminProduct = () => {
               bordered={false}
               className="form-select mb-3"
               onChange={(value) => setShipping(value)}
+              value={shipping ? "Yes" : "No"}
             >
               <Option value="0">No</Option>
               <Option value="1">Yes</Option>
@@ -170,4 +208,4 @@ const AdminProduct = () => {
   );
 };
 
-export default AdminProduct;
+export default AdminProductUpdate;
