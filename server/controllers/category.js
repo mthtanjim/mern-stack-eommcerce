@@ -38,9 +38,10 @@ const update = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-  const removed = await Category.findOneAndDelete(req.params.categoryId);
-  res.json({deleted: removed});
+
   try {
+    const removed = await Category.findByIdAndDelete(req.params.categoryId);
+    res.json({removed});
   } catch (err) {
     console.log(err);
     res.status(400).json(err.message);

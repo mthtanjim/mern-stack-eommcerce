@@ -1,4 +1,4 @@
-const CategoryForm =({value, setValue, submit}) => {
+const CategoryForm =({handleDelete, value, setValue, submit, buttonText="Create", }) => {
      return (
         <div className="p-3" >
         <form onSubmit={submit}>
@@ -9,9 +9,15 @@ const CategoryForm =({value, setValue, submit}) => {
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <button type="submit" className="btn btn-primary m-3">
-            Create
+         <div className="d-flex justify-content-between" >
+         <button type="submit" className="btn btn-primary m-3">
+            {buttonText}
           </button>
+          {handleDelete && <button onClick={handleDelete} type="submit" className="btn btn-danger m-3">
+            Delete
+          </button>}
+
+         </div>
         </form>
         </div>
      )

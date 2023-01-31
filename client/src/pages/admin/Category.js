@@ -12,6 +12,8 @@ const AdminCategory = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [updatingName, setUpdatingName] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
@@ -28,6 +30,47 @@ const AdminCategory = () => {
     } catch (err) {
       toast.error("failed to create category, try again");
       console.log(err);
+    }
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      // console.log("updating=> ", updatingName)
+      const { data } = await axios.put(`/category/${selected._id}`, {
+        name: updatingName,
+      });
+
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        setVisible(false);
+        setSelected(null);
+        toast.success(`upated`);
+        setUpdatingName();
+        loadCategories();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Category may already taken");
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.delete(`/category/${selected._id}`);
+      if (data?.error) {
+        toast.error(data.error);
+      } else {
+        toast.success(`${data.removed.name} successfully Deleted`);
+        setSelected(null);
+        setVisible(false);
+        loadCategories();
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Category may already taken");
     }
   };
 
@@ -61,7 +104,6 @@ const AdminCategory = () => {
             <div className=" mb-3 mt-3 h4 bg-light">Manage Categories</div>
 
             <CategoryForm value={name} setValue={setName} submit={submit} />
-
             <hr />
             <div className="col">
               {category &&
@@ -70,6 +112,8 @@ const AdminCategory = () => {
                     className="btn m-1 shadow-sm border border-secondary"
                     onClick={() => {
                       setVisible(true);
+                      setSelected(data);
+                      setUpdatingName(data.name);
                     }}
                     key={data._id}
                   >
@@ -84,13 +128,15 @@ const AdminCategory = () => {
               onCancel={() => {
                 setVisible(false);
               }}
-              footer={null}
+              footer={false}
             >
-               <CategoryForm 
-           value={name} 
-           setValue={setName} 
-           submit={submit}
-           />
+              <CategoryForm
+                value={updatingName}
+                setValue={setUpdatingName}
+                submit={handleUpdate}
+                buttonText="Update"
+                handleDelete={handleDelete}
+              />
             </Modal>
           </div>
         </div>
