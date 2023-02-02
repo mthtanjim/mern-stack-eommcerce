@@ -1,13 +1,14 @@
-import { useAuth } from "../../context/auth";
-import Jumbotron from "../../components/cards/Jumbotron";
-import { NavLink } from "react-router-dom";
-import AdminMenu from "../../components/nav/AdminMenu";
-import { useState, useEffect } from "react";
+import { Select } from "antd";
 import axios from "axios";
-import { Descriptions, Select } from "antd";
-import toast from "react-hot-toast"
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-
+import Jumbotron from "../../components/cards/Jumbotron";
+import AdminMenu from "../../components/nav/AdminMenu";
+import { useAuth } from "../../context/auth";
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Modal } from "antd";
+const { confirm } = Modal;
 const { Option } = Select;
 
 const AdminProductUpdate = () => {
@@ -54,9 +55,8 @@ const AdminProductUpdate = () => {
         setCategory(data.category._id)
         setShipping(data.shipping)
         setQuantity(data.quantity)
-        setId(data.name)
-        setPhoto(data.photo)
-        
+        setId(data._id)
+        setPhoto(data.photo)        
     }catch(err) {
         console.log(err)
     }
@@ -74,20 +74,48 @@ const AdminProductUpdate = () => {
       productData.append("shipping", shipping);
       productData.append("quantity", quantity);
      
-      const {data} = await axios.post('/products', productData)
+      const {data} = await axios.put(`/products/${id}`, productData)
+      
       if(data?.error) {
         toast.success(`${data.error}`)
       } else {
-        toast.success(`${data.name} is created`)
+        toast.success(`${data.name} is updated`)
         //
         navigate('/dashboard/admin/products')
+        // window.location.reload()
       }
 
     } catch (err) {
       console.log(err);
-      toast.error('Product create faild, Try again')
+      toast.error('Product update faild, Try again')
     }
+  }
+
+  const showConfirm = () => {
+    confirm({
+      title: 'Do you Want to delete these items?',
+      icon: <ExclamationCircleFilled />,
+      onOk() {
+       return(handleDelete())
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+    
   };
+
+const handleDelete = async () => {
+  console.log("hadnle delete")
+  try {
+    const {data} = await axios.delete(`/products/${id}`)
+    toast.success(`${data.name} Deleted`)
+    navigate('/dashboard/admin/products')
+  }catch(err) {
+    console.log(err)
+    toast.error("Delete Faild, Try again")
+  }
+}
 
   return (
     <>
@@ -96,10 +124,11 @@ const AdminProductUpdate = () => {
         subTitle="Welcome to the Admin dashboard"
       />
       <div className="container-fluid">
-        <div className="row">
+        <div className="row ">
           <div className="col-3 shadow-sm">
             <AdminMenu />
           </div>
+         
           <div className="col-9">
             <div className=" p-3 mb-3 mt-3 h4 bg-light">Update Product</div>
             {photo ? (
@@ -112,16 +141,15 @@ const AdminProductUpdate = () => {
                 />
               </div>
             ) : ( 
-            <div className="text-center">
-            <img
-              src={`${
-                process.env.REACT_APP_API
-              }/products/photo/${id}}`}
-              alt="sobi"
-              className="img img-responsive"
-              height="200px"
-            />
-          </div>
+              <div className="text-center">
+              <img
+                src={`${
+                  process.env.REACT_APP_API
+                }/products/photo/${id}?${new Date().getTime}`}
+                alt="sobi"
+                className="img img-responsive"
+              />
+            </div>
           )
             }
             <div className="mt-3">
@@ -161,14 +189,13 @@ const AdminProductUpdate = () => {
               onChange={(e) => setDescription(e.target.value)}
             />
 
-            <Select
-              showSearch
-              placeholder="Choice Shipping "
-              size="large"
+          <Select
               bordered={false}
+              size="large"
               className="form-select mb-3"
+              placeholder="Choose shipping"
               onChange={(value) => setShipping(value)}
-              value={shipping ? "Yes" : "No"}
+              value={shipping ? "yes" : "no"}
             >
               <Option value="0">No</Option>
               <Option value="1">Yes</Option>
@@ -182,6 +209,7 @@ const AdminProductUpdate = () => {
               bordered={false}
               className="form-select mb-3"
               onChange={(value) => setCategory(value)}
+              value={category}
             >
               {categories?.map((c) => (
                 <Option key={c._id} value={c._id}>
@@ -189,7 +217,7 @@ const AdminProductUpdate = () => {
                 </Option>
               ))}
             </Select>
-
+            
             <input
               type="number"
               min="1"
@@ -198,9 +226,14 @@ const AdminProductUpdate = () => {
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
-            <button onClick={handleSubmit} className="btn btn-primary mb-5">
-              Submit
+           <div className="d-flex justify-content-between">
+           <button onClick={handleSubmit} className="btn btn-primary mb-5">
+              Update
             </button>
+            <button onClick={showConfirm} className="btn btn-danger mb-5">
+              Delete
+            </button>
+           </div>
           </div>
         </div>
       </div>

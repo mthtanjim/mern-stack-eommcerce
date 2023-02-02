@@ -52,19 +52,19 @@ const UpdateProduct = async (req, res) => {
     //validation
     switch (true) {
       case !name.trim():
-        res.json({ error: "name is required " });
+        return res.json({ error: "name is required " });
       case !description.trim():
-        res.json({ error: "description is required " });
+        return res.json({ error: "description is required " });
       case !price.trim():
-        res.json({ error: "price is required " });
+        return res.json({ error: "price is required " });
       case !shipping.trim():
-        res.json({ error: "shipping is required " });
+        return res.json({ error: "shipping is required " });
       case !category.trim():
-        res.json({ error: "Cateagory is required " });
+        return res.json({ error: "Cateagory is required " });
       case !quantity.trim():
-        res.json({ error: "quantity is required " });
+        return res.json({ error: "quantity is required " });
       case photo && photo.size > 600000:
-        res.json({ error: "Photo size should be less than 600kb" });
+        return res.json({ error: "Photo size should be less than 600kb" });
     }
 
     //update product
@@ -81,12 +81,12 @@ const UpdateProduct = async (req, res) => {
       product.photo.contentType = photo.type;
     }
     await product.save();
-    res.json(product)
+    res.json(product);
   } catch (err) {
     console.log("create Product---------", err);
     res.status(400).send(err);
   }
-};
+}
 
 const list = async (req, res) => {
   try {
@@ -114,7 +114,7 @@ const read = async (req, res) => {
     res.json({ message: err });
   }
 };
-  //photo
+//photo
 const photo = async (req, res) => {
   try {
     const product = await Product.findById(req.params.productId).select(
