@@ -91,8 +91,8 @@ const UpdateProduct = async (req, res) => {
 const list = async (req, res) => {
   try {
     const products = await Product.find({})
-      .populate("category")
-      .select("-photo")
+      .populate("category") 
+      .select("-photo") //deselect photo 
       .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).json(products);
