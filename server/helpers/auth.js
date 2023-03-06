@@ -16,8 +16,8 @@ const hashPassword = (password) => {
   });
 };
 
-// main pass// tan2424
-// hash   // saldfisofhjsfhosifoishfoashdfoiahsdfoihasdiofh
+// main pass// tan2424 
+// hash   // saldfisofhjsfhosifoishfoashdfoiahsdfoihasdiofh 
 
 const comparePassword = (password, hashed) => {
     return bcrypt.compare(password,hashed)

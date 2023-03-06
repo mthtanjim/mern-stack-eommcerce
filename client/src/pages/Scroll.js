@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
-import i4 from "./i4.jpg"
-import "./Scroll.css"
+import "./Scroll.css";
 
 function ScrollableContainer() {
   const containerRef = useRef(null);
@@ -36,7 +35,7 @@ function ScrollableContainer() {
       <div className="content"
         style={{ width: '200%', display: 'flex', position: 'absolute', left: `${scrollLeft}px` }}>
         {/* content goes here */}
-        <img src={i4} alt="Example Image" onClick={handleClickRight}/>
+        {/* <img src={i4} alt="Example Image" onClick={handleClickRight}/> */}
         <div className="right-side-content" onClick={handleClickRight}>
         {/* right side content goes here */}
         </div>

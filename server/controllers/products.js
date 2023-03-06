@@ -33,7 +33,6 @@ const CreateProduct = async (req, res) => {
       product.photo.data = fs.readFileSync(photo.path);
       product.photo.contentType = photo.type;
     }
-
     await product.save();
     res.json(product);
   } catch (err) {
@@ -47,8 +46,6 @@ const UpdateProduct = async (req, res) => {
     const { name, description, price, shipping, category, quantity } =
       req.fields;
     const { photo } = req.files;
-    console.log(name, description, price, shipping, category, quantity);
-
     //validation
     switch (true) {
       case !name.trim():
@@ -86,13 +83,13 @@ const UpdateProduct = async (req, res) => {
     console.log("create Product---------", err);
     res.status(400).send(err);
   }
-}
+};
 
 const list = async (req, res) => {
   try {
     const products = await Product.find({})
-      .populate("category") 
-      .select("-photo") //deselect photo 
+      .populate("category")
+      .select("-photo") //deselect photo
       .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).json(products);
@@ -114,6 +111,7 @@ const read = async (req, res) => {
     res.json({ message: err });
   }
 };
+
 //photo
 const photo = async (req, res) => {
   try {
@@ -142,4 +140,56 @@ const remove = async (req, res) => {
   }
 };
 
-module.exports = { CreateProduct, UpdateProduct, list, read, photo, remove };
+const filterProduct = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    // console.log("checked", checked, radio)
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    if (radio.length > 0) args.price = { $gte: radio[0], $lte: radio[1] };
+    const products = await Product.find(args);
+    //  console.log("data => ", products)
+    res.status(201).json(products);
+  } catch (err) {
+    console.log(err);
+    res.send({ message: err });
+  }
+};
+
+const listProducts = async (req, res) => {
+  const perPage = 6;
+  const page = req.params.page ? req.params.page : 1;
+
+  const products = await Product.find({})
+    .skip((page - 1) * perPage)
+    .limit(perPage)
+    .sort({ createdAt: -1 })
+    .select("-photo");
+  res.json(products);
+  try {
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const productsCount = async (req, res) => {
+  try {
+    const products = await Product.find({}).estimatedDocumentCount();
+    res.status(200).json(products);
+  } catch (err) {
+    console.log("get product error:=> ", err);
+    res.send({ err: "product error" });
+  }
+};
+
+module.exports = {
+  CreateProduct,
+  UpdateProduct,
+  list,
+  read,
+  photo,
+  remove,
+  filterProduct,
+  listProducts,
+  productsCount,
+};

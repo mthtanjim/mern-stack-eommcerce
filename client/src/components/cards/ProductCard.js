@@ -28,7 +28,7 @@ const ProductCard = ({ p }) => {
         })}
         </h4>
         <h5>{p.name}</h5>
-        <p className="card-text">{p?.description?.substring(0, 50)}...</p>
+        <p className="card-text">{p?.description?.substring(0, 50)}...</p> 
         {/* <p>{moment(p.createdAt).fromNow()}</p>
       <p>{p.sold}</p> */}
       </div>

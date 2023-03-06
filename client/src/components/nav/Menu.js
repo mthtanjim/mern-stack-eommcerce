@@ -23,6 +23,11 @@ const Menu = () => {
             Home
           </NavLink>
         </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/shop">
+            Shop
+          </NavLink>
+        </li>
 
         {!auth?.user ? (
           <>
