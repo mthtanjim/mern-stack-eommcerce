@@ -6,6 +6,7 @@ import { useAuth } from "../context/auth";
 import "./ProjectList.css"; // import styles
 import Scroll from "./Scroll";
 
+
 const Home = () => {
   const [auth, setAuth] = useAuth();
   const [products, setProducts] = useState([]);

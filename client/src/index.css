@@ -1,13 +1,18 @@
+.form-control {
+  -webkit-box-shadow: none !important;
+  outline: -webkit-focus-ring-color auto 0px !important;
+}
+
 .active {
   color: rgba(74, 74, 195, 0.347);
 }
 
 .card-button {
-   border-radius: 0px;
+  border-radius: 0px;
 }
 .bgcolor {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-} 
+}
 
 .hoverable:hover {
   border-right: 5px solid #0d6efd;

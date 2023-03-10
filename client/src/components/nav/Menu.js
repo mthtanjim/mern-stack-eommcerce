@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import Search from "../forms/Search";
 
 const Menu = () => {
   const navigate = useNavigate();
@@ -15,9 +16,12 @@ const Menu = () => {
     navigate("/login");
   };
 
+
+
   return (
     <>
       <ul className="nav d-flex justify-content-center shadow-sm mb-3 pb-2 pt-2 bg-gray">
+     <Search/>
         <li className="nav-item">
           <NavLink className="nav-link" to="/">
             Home

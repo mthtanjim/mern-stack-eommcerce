@@ -10,6 +10,7 @@ const {
   remove,
   filterProduct,
   listProducts,
+  productsSearch
 } = require("../controllers/products");
 const { isAdmin, requireSignin } = require("../middlewares/auth");
 const formidable = require("express-formidable");
@@ -23,5 +24,6 @@ router.delete("/:productId", remove);
 router.get("/photo/:productId", photo);
 router.post("/filterd-product", filterProduct);
 router.get("/list-products/:page", listProducts);
+router.get('/search/:keyword', productsSearch)
 
 module.exports = router;

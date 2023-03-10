@@ -182,6 +182,22 @@ const productsCount = async (req, res) => {
   }
 };
 
+const productsSearch = async (req, res) => {
+  try {
+    // const { keyword } = req.params;
+    // const result = await Product.find({
+    //   $or: [
+    //     { name: { $regex: keyword, $options: "i" } }, // Search by product name
+    //     { description: { $regex: keyword, $options: "i" } }//serch description
+    //   ],
+    // }).select("-photo")
+    // console.log("data search =>", result)
+    res.status(200).json("result");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   CreateProduct,
   UpdateProduct,
@@ -192,4 +208,5 @@ module.exports = {
   filterProduct,
   listProducts,
   productsCount,
+  productsSearch,
 };
