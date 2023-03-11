@@ -17,6 +17,7 @@ import UserOrders from "./pages/user/Orders";
 import UserProfile from "./pages/user/Profile";
 import AdminProducts from "./pages/admin/Products";
 import Shop from "./pages/Shop";
+import SearchProvider from "./context/search";
 
 function App() {
   return (
