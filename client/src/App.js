@@ -18,6 +18,7 @@ import UserProfile from "./pages/user/Profile";
 import AdminProducts from "./pages/admin/Products";
 import Shop from "./pages/Shop";
 import SearchProvider from "./context/search";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/register" element={<Register />} />
