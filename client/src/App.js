@@ -19,6 +19,7 @@ import AdminProducts from "./pages/admin/Products";
 import Shop from "./pages/Shop";
 import SearchProvider from "./context/search";
 import Search from "./pages/Search";
+import ProductView from "./pages/ProductView";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/product/:slug" element={<ProductView />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/register" element={<Register />} />
@@ -41,7 +43,10 @@ function App() {
         <Route path="/dashboard" element={<AdminRoute />}>
           <Route path="admin" element={<AdminDashboard />} />
           <Route path="admin/product" element={<AdminProduct />} />
-          <Route path="admin/product/update/:slug" element={<AdminProductsUpdate />} />
+          <Route
+            path="admin/product/update/:slug"
+            element={<AdminProductsUpdate />}
+          />
           <Route path="admin/products" element={<AdminProducts />} />
           <Route path="admin/category" element={<AdminCategory />} />
         </Route>
