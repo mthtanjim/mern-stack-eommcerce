@@ -34,6 +34,7 @@ const ProductCard = ({ p }) => {
         {/* <p>{moment(p.createdAt).fromNow()}</p>
       <p>{p.sold}</p> */}
       </div>
+
       <div className="d-flex justify-content-between">
         <button
           className="btn btn-primary col card-button"
