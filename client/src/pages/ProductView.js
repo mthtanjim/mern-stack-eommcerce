@@ -17,7 +17,6 @@ import ProductCard from "../components/cards/ProductCard";
 const ProductView = () => {
   const [product, setProduct] = useState({});
   const [related, setRelated] = useState([]);
-console.log("related => ", related)
   //hooks
   const params = useParams();
   useEffect(() => {
