@@ -188,11 +188,28 @@ const productsSearch = async (req, res) => {
     const result = await Product.find({
       $or: [
         { name: { $regex: keyword, $options: "i" } }, // Search by product name
-        { description: { $regex: keyword, $options: "i" } }//serch description
+        { description: { $regex: keyword, $options: "i" } }, //serch description
       ],
-    }).select("-photo")
-    console.log("data search =>", result)
+    }).select("-photo");
     res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const relatedProducts = async (req, res) => {
+  try {
+    const { productId, categoryId } = req.params;
+    //find all product from tegory id and excluding the one products
+    //defined by  _id: {$ne: productId}
+    const related = await Product.find({
+      category: categoryId,
+      _id: { $ne: productId },
+    })
+      .select("-photo")
+      .populate("category")
+      .limit(3);
+    res.status(200).json(related);
   } catch (err) {
     console.log(err);
   }
@@ -209,4 +226,5 @@ module.exports = {
   listProducts,
   productsCount,
   productsSearch,
+  relatedProducts,
 };

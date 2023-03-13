@@ -25,7 +25,7 @@ function App() {
   return (
     <Router>
       <Menu />
-      <Toaster />
+      <Toaster/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
