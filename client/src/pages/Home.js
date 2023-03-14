@@ -13,8 +13,6 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  console.log("products.length =>", products.length);
-
   useEffect(() => {
     loadProducts();
     getTotal();
@@ -37,7 +35,6 @@ const Home = () => {
   const loadProducts = async () => {
     try {
       const { data } = await axios.get(`products/list-products/${page}`);
-      console.log("dataload product =>", data);
       setProducts(data);
     } catch (err) {
       console.log(err);
