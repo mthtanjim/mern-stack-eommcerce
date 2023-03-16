@@ -8,10 +8,8 @@ export default function CategoryView() {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [category, setCategory] = useState([]);
-  const [product, setProduct] = useState({});
-
-  console.log(product);
+  const [category, setCategory] = useState({});
+  const [product, setProduct] = useState([]);
 
   useEffect(() => {
     if (params?.slug) loadProductsByCategory();
@@ -20,7 +18,7 @@ export default function CategoryView() {
   const loadProductsByCategory = async () => {
     try {
       const { data } = await axios.get(`/category/products/${params.slug}`);
-      console.log("data product by category=> ", data);
+      // console.log("data product by category=> ", data.product);
       setProduct(data.product);
       setCategory(data.category);
     } catch (err) {
@@ -31,17 +29,15 @@ export default function CategoryView() {
   return (
     <>
       <Jumbotron title={category.name} />
-    <div className="container-fluid">
-    <div className="row mt-3" > 
-    {product?.map((p) => (
-      <div className="col-md-4" key={p._id}>
-        <ProductCard p={p} />
-      </div> 
-      ))}
-    </div>
-    </div>
-
-   
+      <div className="container-fluid">
+        <div className="row mt-3">
+          {product?.map((p) => (
+            <div className="col-md-4" key={p._id}>
+              <ProductCard p={p} />
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   );
 }

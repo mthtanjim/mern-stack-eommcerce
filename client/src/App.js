@@ -22,15 +22,17 @@ import Search from "./pages/Search";
 import ProductView from "./pages/ProductView";
 import CategoriesList from "./pages/CategoriesList"
 import CategoryView from "./pages/CategoryView";
+import Card from "./pages/Card";
 
 function App() {
   return (
     <Router>
       <Menu/>
-      <Toaster/>
+      <Toaster position="top-right"/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/card" element={<Card/>} />
         <Route path="/categoris" element={<CategoriesList />} />
         <Route path="/category/:slug" element={<CategoryView />} />
         <Route path="/search" element={<Search />} />

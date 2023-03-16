@@ -1,7 +1,12 @@
 import { Badge } from "antd";
+import { toast } from "react-hot-toast";
 import {useNavigate} from 'react-router-dom'
+import { useCard } from "../../context/card";
 
 const ProductCard = ({ p }) => {
+  //context
+  const [card, setCard] = useCard()
+  //hooks
   const navigate = useNavigate()
   return (
     <div className="card mb-3 hoverable">
@@ -46,6 +51,10 @@ const ProductCard = ({ p }) => {
         <button
           className="btn btn-outline-primary col card-button"
           style={{ borderBottomLeftRadius: "5px" }}
+          onClick={() => {setCard([...card, p])
+          toast.success("Added to Card")
+          localStorage.setItem('card', JSON.stringify([...card, p]))
+          }}
         >
           Add to Card
         </button>

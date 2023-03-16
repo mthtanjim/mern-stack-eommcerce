@@ -1,20 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { AuthProvider, useAuth } from './context/auth';
-import { SearchProvider } from './context/search';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { AuthProvider, useAuth } from "./context/auth";
+import { SearchProvider } from "./context/search";
+import { CardProvider } from "./context/card";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <AuthProvider>
       <SearchProvider>
-      <App />
+        <CardProvider>
+          <App />
+        </CardProvider>
       </SearchProvider>
     </AuthProvider>
-    
   </React.StrictMode>
 );
 

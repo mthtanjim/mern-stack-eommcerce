@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { Badge } from "antd";
+import { useCard } from "../context/card";
 import {
   FaProjectDiagram,
   FaRegClock,
@@ -13,10 +14,12 @@ import {
   FaRocket,
 } from "react-icons/fa";
 import ProductCard from "../components/cards/ProductCard";
+import { toast } from "react-hot-toast";
 
 const ProductView = () => {
   const [product, setProduct] = useState({});
   const [related, setRelated] = useState([]);
+  const [card, setCard] = useCard()
   //hooks
   const params = useParams();
   useEffect(() => {
@@ -105,9 +108,11 @@ const ProductView = () => {
             <button
               className="btn btn-outline-primary col card-button"
               style={{ borderBottomLeftRadius: "5px" }}
-            >
-              {" "}
-              Add to Card{" "}
+              onClick={() => {
+                setCard([...card, product])
+                toast.success("item added")
+              }}
+            > Add to Card
             </button>
           </div>
         </div>

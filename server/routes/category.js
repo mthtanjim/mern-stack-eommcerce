@@ -19,5 +19,3 @@ router.get("/products/:slug", productByCategory);
 
 module.exports = router;
 
-//CRUD
-//create read update delete
