@@ -71,8 +71,10 @@ const read = async (req, res) => {
 const productByCategory = async (req, res) => {
   try {
     const category = await Category.findOne({ slug: req.params.slug });
-    const product = await Products.find({ category }).populate("category").select("-photo");
-    res.status(200).json({category, product});
+    const product = await Products.find({ category })
+      .populate("category")
+      .select("-photo");
+    res.status(200).json({ category, product });
   } catch (err) {
     console.log(err);
   }

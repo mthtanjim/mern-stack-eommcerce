@@ -3,7 +3,7 @@ import { useCard } from "../context/card";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 import moment from "moment";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 
 export default function Card() {
   const [card, setCard] = useCard();
@@ -11,14 +11,26 @@ export default function Card() {
 
   const navigate = useNavigate();
 
-  console.log("card => ", card);
-
   const remoteFromCard = (productid) => {
     let myCard = [...card];
     let index = myCard.findIndex((item) => item._id === productid);
-    myCard.splice(index, 1)
-    setCard(myCard)
-   
+    myCard.splice(index, 1);
+    setCard(myCard);
+    localStorage.setItem("card", JSON.stringify(myCard));
+  };
+
+  const cardTotal = () => {
+    let total = 0;
+    card.map((item) => {
+      total += item.price;
+    });
+    return (
+      total.toLocaleString("en-US", {
+        style: 'currency',
+        currencyDisplay: "symbol",
+        currency: "BDT",
+        minimumFractionDigits: "0"
+    }))
   };
 
   return (
@@ -74,9 +86,18 @@ export default function Card() {
                       </div>
                       <div className="col-md-8 ">
                         <div className="card-body">
-                          <h5 className="card-title">{p?.name}</h5>
+                          <h5 className="card-title">
+                            {p?.name}
+                            {p?.price?.toLocaleString("en-US", {
+                              style: "currency",
+                              currencyDisplay: "symbol",
+                              currency: "BDT",
+                              minimumFractionDigits: "0",
+                            })}
+                          </h5>
+
                           <p className="card-text">
-                            {`${p?.description?.substring(0, 50)}...`}p
+                            {`${p?.description?.substring(0, 50)}...`}
                           </p>
                         </div>
                       </div>
@@ -88,9 +109,10 @@ export default function Card() {
                         </p>
                         <p
                           className="text-danger mb-2 pointer"
-                          onClick={() => {remoteFromCard(p._id)
-                            toast.success(`Item Removed`)
-                        }}
+                          onClick={() => {
+                            remoteFromCard(p._id);
+                            toast.success(`Item Removed`);
+                          }}
                         >
                           remove
                         </p>
@@ -100,7 +122,15 @@ export default function Card() {
                 ))}
               </div>
             </div>
-            <div className="col-md-4">total / Address / payment Option</div>
+            <div className="col-md-4">
+              <h4>Cart Summay</h4>
+              Address / payment Option
+              <hr/>
+              <h4>Total: {cardTotal()}</h4>
+              <hr/>
+                <input type="textarea" className="textarea" placeholder="shipping address" ></input>
+                <hr/>
+            </div>
           </div>
         </div>
       )}
