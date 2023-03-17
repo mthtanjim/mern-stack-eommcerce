@@ -65,7 +65,6 @@ const login = async (req, res) => {
     //3. check if email is taken
     const user = await User.findOne({ email });
     if (!user) {
-      
       return res.json({ error: "user not found.." });
     }
     //4. compare password
@@ -77,7 +76,7 @@ const login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    console.log("token: => ", token)
+    console.log("token: => ", token);
     //send response
     res.json({
       user: {
@@ -95,18 +94,48 @@ const login = async (req, res) => {
 
 const users = async (req, res) => {
   try {
-    console.log("curent users:=>", req.decoded)
-    const user = await User.find({})
-    res.status(200).json({user})
-  }catch(err) {
-    console.log("error from test get users", err)
+    const user = await User.find({});
+    res.status(200).json({ user });
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
+const updateProfile = async (req, res) => {
+  console.log("req.user", req);
+  try {
+    const { name, password, address } = req.body;
+    const user = await User.findById(req.user._id);
+
+    //check password length
+    if (password && password.length < 6) {
+      return res.json({
+        error: "password is required and should be min 6 characters long",
+      });
+    }
+    // hash the password
+    const hashPassword = password ? hashPassword(password) : undefined;
+
+    const updated = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+        password: password || user.password,
+        address: address || user.address,
+      },
+      { new: true }
+    );
+
+    updated.password = undefined;
+    res.json(updated);
+  } catch (err) {
+    console.log("Found Error in update profile", err);
+  }
+};
 
 const secret = async (req, res, next) => {
   // console.log("curent users:=>", req.decoded)
   res.json({ currentUser: req.user });
-}
+};
 
-module.exports = { register, login, users, secret };
+module.exports = { register, login, users, secret, updateProfile };

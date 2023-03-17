@@ -8,10 +8,11 @@ import axios from "axios";
 
 const UserProfile = () => {
   const [auth, setAuth] = useAuth();
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [address, setAddress] = useState();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     if (auth?.user) {
@@ -22,15 +23,17 @@ const UserProfile = () => {
     }
   }, [auth?.user]);
 
-  const handleSubmit = () => {
-    email.preventDefault();
+  const handleSubmit = async (e) => {
+    console.log("Clicked handle submit");
+    e.preventDefault();
+
     try {
-      const { data } = axios.put("/profile", {
+      const { data } = await axios.put("/profile", {
         name,
         email,
         password,
       });
-      console.log("data=> ", data);
+      console.log("updated data=> ", data);
     } catch (err) {
       console.log(err);
     }
@@ -49,30 +52,37 @@ const UserProfile = () => {
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
-                className="form-control"
+                className="form-control m-2 p-2"
                 placeholder="enter your name"
                 value={name}
-                onChange={(e) => setName(name)}
+                onChange={(e) => setName(e.target.value)}
                 autoFocus={true}
               />
               <input
                 type="email"
-                className="form-control"
+                className="form-control m-2 p-2"
                 placeholder="enter your name"
                 value={email}
-                onChange={(e) => setEmail(email)}
-             
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={true}
               />
               <input
                 type="password"
-                className="form-control"
+                className="form-control m-2 p-2"
                 placeholder="enter your password"
                 value={password}
-                onChange={(e) => setPassword([password])}
+                onChange={(e) => setPassword(e.target.value)}
               />
-              <textarea className="form-control" placeholder="enter your address" value={address} onChange={(e) => {setAddress(e.target.value)}} ></textarea>
+              <textarea
+                className="form-control m-2 p-2"
+                placeholder="enter your address"
+                value={address}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
+              ></textarea>
+              <button className="btn btn-primary m-2 p-2">Submit</button>
             </form>
-            <button className="btn btn primary" ></button>
           </div>
         </div>
       </div>
