@@ -1,6 +1,6 @@
 const { post } = require("../routes/auth");
 const User = require("../models/user");
-const { comparePassword, hashPassword } = require("../helpers/auth");
+const { hashPassword, comparePassword } = require("../helpers/auth");
 var jwt = require("jsonwebtoken");
 
 // this to fix  before saving
@@ -19,7 +19,7 @@ const register = async (req, res) => {
     if (!email) {
       return res.json({ error: "meail is required" });
     }
-    if (!password || password.lenth > 6) {
+    if (!password || password.length < 6) {
       return res.json({ error: "password not valied" });
     }
     //3. check if email is taken
@@ -59,7 +59,7 @@ const login = async (req, res) => {
     if (!email) {
       return res.json({ error: "meail is required" });
     }
-    if (!password || password.lenth > 6) {
+    if (!password || password.length < 6) {
       return res.json({ error: "password not valied" });
     }
     //3. check if email is taken
@@ -76,7 +76,6 @@ const login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    console.log("token: => ", token);
     //send response
     res.json({
       user: {
@@ -102,11 +101,10 @@ const users = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-  console.log("req.user", req);
   try {
     const { name, password, address } = req.body;
     const user = await User.findById(req.user._id);
-
+    console.log("req.body", req.body);
     //check password length
     if (password && password.length < 6) {
       return res.json({
@@ -114,13 +112,13 @@ const updateProfile = async (req, res) => {
       });
     }
     // hash the password
-    const hashPassword = password ? hashPassword(password) : undefined;
+    const hashedPassword = password ? await hashPassword(password) : undefined;
 
     const updated = await User.findByIdAndUpdate(
       req.user._id,
       {
         name: name || user.name,
-        password: password || user.password,
+        password: hashedPassword || user.password,
         address: address || user.address,
       },
       { new: true }
