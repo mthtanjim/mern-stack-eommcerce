@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import AdminMenu from "../../components/nav/AdminMenu";
 import UserMenu from "../../components/nav/UserMenu";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 const UserProfile = () => {
   const [auth, setAuth] = useAuth();
@@ -24,16 +25,27 @@ const UserProfile = () => {
   }, [auth?.user]);
 
   const handleSubmit = async (e) => {
-    console.log("Clicked handle submit");
     e.preventDefault();
-
     try {
       const { data } = await axios.put("/profile", {
         name,
-        email,
         password,
+        address,
       });
-      console.log("updated data=> ", data);
+
+      if(data?.error) {
+        toast.error(data.error)
+      } else {
+        // console.log("updated data=> ", data);
+      setAuth({ ...auth, user: data });
+
+      //local storage update
+      let ls = localStorage.getItem("auth");
+      ls = JSON.parse(ls);
+      ls.user = data;
+      localStorage.setItem("auth", JSON.stringify(ls));
+      toast.success("Profile Updated");
+      }      
     } catch (err) {
       console.log(err);
     }
@@ -77,9 +89,7 @@ const UserProfile = () => {
                 className="form-control m-2 p-2"
                 placeholder="enter your address"
                 value={address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
+                onChange={(e) => setAddress(e.target.value)}
               ></textarea>
               <button className="btn btn-primary m-2 p-2">Submit</button>
             </form>

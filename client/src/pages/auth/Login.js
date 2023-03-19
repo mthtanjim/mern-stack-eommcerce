@@ -11,7 +11,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
-  console.log("location from login => loaiton.state", location.state)
   //hook 
   const [auth, setAuth] = useAuth();
 
@@ -30,7 +29,7 @@ const Login = () => {
         setAuth({ ...auth, token: data.token, user: data.user });
         toast.success("Login success");
         
-        navigate(location.state || `/dashboard/${data?.user?.role === 1 ? "admin" : "user"}`);
+        navigate(`${location.state}` || `/dashboard/${data?.user?.role === 1 ? "admin" : "user"}`);
         
       }
       

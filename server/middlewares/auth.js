@@ -17,7 +17,7 @@ const requireSignin = (req, res, next) => {
 const isAdmin = async (req, res, next) => {
   const user = await User.findById(req.decoded);
 
-  if (user.role == 1) {
+  if (user?.role == 1) {
     console.log("Condition is Okey");
     next();
   } else {

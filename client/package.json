@@ -10,6 +10,7 @@
     "axios": "^1.2.2",
     "env-cmd": "^10.1.0",
     "moment": "^2.29.4",
+    "next-images": "^1.8.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",

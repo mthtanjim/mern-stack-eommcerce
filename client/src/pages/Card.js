@@ -24,13 +24,12 @@ export default function Card() {
     card.map((item) => {
       total += item.price;
     });
-    return (
-      total.toLocaleString("en-US", {
-        style: 'currency',
-        currencyDisplay: "symbol",
-        currency: "BDT",
-        minimumFractionDigits: "0"
-    }))
+    return total.toLocaleString("en-US", {
+      style: "currency",
+      currencyDisplay: "symbol",
+      currency: "BDT",
+      minimumFractionDigits: "0",
+    });
   };
 
   return (
@@ -70,9 +69,9 @@ export default function Card() {
           <div className="row">
             <div className="col-md-8">
               <div className="row">
-                {card?.map((p) => (
+                {card?.map((p, index) => (
                   <div
-                    key={p._d}
+                    key={index}
                     className="card mb-3"
                     style={{ maxWidth: 540 }}
                   >
@@ -125,11 +124,43 @@ export default function Card() {
             <div className="col-md-4">
               <h4>Cart Summay</h4>
               Address / payment Option
-              <hr/>
+              <hr />
               <h4>Total: {cardTotal()}</h4>
-              <hr/>
-                <input type="textarea" className="textarea" placeholder="shipping address" ></input>
-                <hr/>
+              <hr />
+              {auth?.user?.address ? (
+                <>
+                  <div className="mb-3">
+                    <hr />
+                    <h4>Address</h4>
+                    <h5>{auth?.user?.address}</h5>
+                  </div>
+                  <button
+                    onClick={() => navigate("/dashboard/user/profile")}
+                    className="btn btn-outline-warning"
+                  >
+                    Update Address
+                  </button>
+                </>
+              ) : (
+                <div className="mb-3">
+                  {auth?.token ? (
+                    <button
+                      onClick={() => navigate("/dashboard/user/profile")}
+                      className="btn btn-outline-warning"
+                    >
+                      Add Delivery Address
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate("/login", {state: "/card"})}
+                      className="btn btn-outline-danger"
+                    >
+                      login to checkout
+                    </button>
+                  )}
+                </div>
+              )}
+              <hr />
             </div>
           </div>
         </div>

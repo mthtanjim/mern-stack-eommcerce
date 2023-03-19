@@ -104,7 +104,6 @@ const updateProfile = async (req, res) => {
   try {
     const { name, password, address } = req.body;
     const user = await User.findById(req.user._id);
-    console.log("req.body", req.body);
     //check password length
     if (password && password.length < 6) {
       return res.json({

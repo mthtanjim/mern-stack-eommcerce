@@ -4,7 +4,8 @@ import Jumbotron from "../components/cards/Jumbotron";
 import ProductCard from "../components/cards/ProductCard";
 import { useAuth } from "../context/auth";
 import "./ProjectList.css"; // import styles
-import Scroll from "./Scroll";
+import Scroll from "./Scroll"
+import Homes from "../components/Homes" 
 
 const Home = () => {
   const [auth, setAuth] = useAuth();
@@ -60,7 +61,8 @@ const Home = () => {
 
   return (
     <div>
-      <Jumbotron title="hello word title" subTitle="" />
+      {/* <Jumbotron title="hello word title" subTitle="" /> */}
+      <Homes/>
       <div className="row mx-1">
         <div className="col-md-6 mt-3">
           <h2 className="p-3 h4 bg-light text-center">New Arrival</h2>

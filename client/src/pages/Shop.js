@@ -12,7 +12,7 @@ const Shop = () => {
   const [radio, setRadio] = useState([]);
 
   useEffect(() => {
-    if(!checked.length || !radio.length) loadProduct();
+    if (!checked.length || !radio.length) loadProduct();
   }, []);
 
   useEffect(() => {
@@ -21,13 +21,16 @@ const Shop = () => {
 
   const loadFilterProducts = async () => {
     try {
-      const {data} = await axios.post('/products/filterd-product', {checked, radio})
-      console.log("filter respnds data=> ", data)
-      setProducts(data)
-    }catch(err) {
-      console.log(err)
+      const { data } = await axios.post("/products/filterd-product", {
+        checked,
+        radio,
+      });
+      console.log("filter respnds data=> ", data);
+      setProducts(data);
+    } catch (err) {
+      console.log(err);
     }
-  }
+  };
 
   const loadProduct = async () => {
     try {
@@ -37,14 +40,14 @@ const Shop = () => {
       console.log(err);
     }
   };
-  
+
   useEffect(() => {
     loadCategories();
   }, []);
 
   const loadCategories = async () => {
     try {
-      const { data } = await axios.get("/category"); 
+      const { data } = await axios.get("/category");
       setCategories(data);
     } catch (err) {
       console.log(err);
@@ -59,7 +62,7 @@ const Shop = () => {
     } else {
       all = all.filter((c) => c !== id);
     }
-    setChecked(all)    
+    setChecked(all);
   };
 
   return (
@@ -99,22 +102,27 @@ const Shop = () => {
                 </Radio.Group>
               </>
             </div>
-                    <div className="p-5 pt-0" >
-                    <button className="btn btn-outline-secondary col-12" 
-                    onClick={() => window.location.reload()}
-                    >Reset</button>
-                    </div>
-
+            <div className="p-5 pt-0">
+              <button
+                className="btn btn-outline-secondary col-12"
+                onClick={() => window.location.reload()}
+              >
+                Reset
+              </button>
+            </div>
           </div>
           <div className="col-md-9">
             <h2 className="p-3 mt-2 mb-2 h4 bg-light text-center">
               {Products?.length} Products
             </h2>
-            <div className="row" style={{height: "100vh", overflow: "scroll"}}>
+            <div
+              className="row"
+              style={{ height: "100vh", overflow: "scroll" }}
+            >
               {Products?.map((p) => (
                 <>
-                  <div className="col-md-4">
-                    <ProductCard p={p}/>
+                  <div key={p._id} className="col-md-4">
+                    <ProductCard p={p} />
                   </div>
                 </>
               ))}
@@ -124,6 +132,6 @@ const Shop = () => {
       </div>
     </>
   );
-}; 
+};
 
 export default Shop;

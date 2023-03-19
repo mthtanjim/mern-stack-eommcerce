@@ -46,7 +46,7 @@ const Menu = () => {
                 </NavLink>
               </li>
               {category?.map((c) => (
-                <li>
+                <li key={c._id} >
                   <NavLink className="nav-link" to={`/category/${c.slug}`}>
                     {c.name}
                   </NavLink>
