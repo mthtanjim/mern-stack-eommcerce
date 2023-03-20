@@ -31,8 +31,8 @@ const Search = () => {
       className="form-control"
     />
 
-    <button className="input-group-text bg-light " type="submit">
-      search
+    <button className="input-group-text text-secondary bg-white" type="submit">
+      Search
     </button>
   </div>
 </form>

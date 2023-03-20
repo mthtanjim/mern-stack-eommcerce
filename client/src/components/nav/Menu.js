@@ -26,51 +26,27 @@ const Menu = () => {
 
   return (
     <>
-      <ul className="nav d-flex shadow-sm pb-3 pt-3 bg-gray sticky-top bg-light">
+     <div className="sticky-top">
+     <ul className="nav d-flex shadow-sm py-2 bg-gray  bg-light">
         <li className="nav-item me-auto">
           <NavLink className="nav-link" to="/">
             <img
               className="object-fit-none"
               src={logo}
               alt=""
-              height="50px"
+              height="45px"
               style={{ position: "absolute", top: "10px", bottom: "10px" }}
             />
           </NavLink>
         </li>
 
-        <li style={{ width: "30%" }} className="nav-item px-3">
+        <li
+          style={{ width: "40%" }}
+          className="nav-item px-3 d-none d-md-block"
+        >
           <Search />
         </li>
-        <li className="nav-item">
-          <div className="dropdown">
-            <a
-              className="nav-link pointer dropdown-toggle"
-              data-bs-toggle="dropdown"
-            >
-              Categories
-              {/* {auth?.user?.name?.toUpperCase()} */}
-            </a>
-
-            <ul
-              className="dropdown-menu"
-              style={{ height: "250px", overflow: "scroll" }}
-            >
-              <li>
-                <NavLink className="nav-link" to={`/categoris`}>
-                  All Categoris
-                </NavLink>
-              </li>
-              {category?.map((c) => (
-                <li key={c._id}>
-                  <NavLink className="nav-link" to={`/category/${c.slug}`}>
-                    {c.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </li>
+       
 
         <li className="nav-item">
           <NavLink className="nav-link" to="/shop">
@@ -133,6 +109,13 @@ const Menu = () => {
           </div>
         )}
       </ul>
+      <div className="nav d-flex justify-content-center col-lg-12 d-block d-md-none sticky-top bg-light shadow-sm">
+        <div className="dive pb-1 " style={{ width: "90%" }}>
+          <Search />
+        </div>
+      </div>
+     </div>
+
     </>
   );
 };
