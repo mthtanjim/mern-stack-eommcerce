@@ -21,18 +21,22 @@ const Search = () => {
 
   return (
     <div>
-      <form className="d-flex" onSubmit={hadleSubmit}>
-        <input
-          onChange={(e) => setValues({ ...values, keyword: e.target.value })}
-          value={values.keyword}
-          type="text"
-          placeholder="Search..."
-          className="form-control me-2"
-        />
-        <button className="btn btn-secondary bg-white text-black" type="submit">
-          Search
-        </button>
-      </form>
+     <form className="d-flex" onSubmit={hadleSubmit}>
+  <div className="input-group">
+    <input
+      onChange={(e) => setValues({ ...values, keyword: e.target.value })}
+      value={values.keyword}
+      type="text"
+      placeholder="Search for products (e.g react, node, course)"
+      className="form-control"
+    />
+
+    <button className="input-group-text bg-light " type="submit">
+      search
+    </button>
+  </div>
+</form>
+
     </div>
   );
 };

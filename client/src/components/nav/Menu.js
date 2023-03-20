@@ -5,6 +5,7 @@ import Search from "../forms/Search";
 import useCategory from "../../hooks/useCategory";
 import { useCard } from "../../context/card";
 import { Badge } from "antd";
+import logo from "../../img/logo1.png";
 
 const Menu = () => {
   //contex
@@ -25,7 +26,22 @@ const Menu = () => {
 
   return (
     <>
-      <ul className="nav d-flex justify-content-between shadow-sm mb-3 pb-2 pt-2 bg-gray sticky-top bg-light">
+      <ul className="nav d-flex shadow-sm pb-3 pt-3 bg-gray sticky-top bg-light">
+        <li className="nav-item me-auto">
+          <NavLink className="nav-link" to="/">
+            <img
+              className="object-fit-none"
+              src={logo}
+              alt=""
+              height="50px"
+              style={{ position: "absolute", top: "10px", bottom: "10px" }}
+            />
+          </NavLink>
+        </li>
+
+        <li style={{ width: "30%" }} className="nav-item px-3">
+          <Search />
+        </li>
         <li className="nav-item">
           <div className="dropdown">
             <a
@@ -46,7 +62,7 @@ const Menu = () => {
                 </NavLink>
               </li>
               {category?.map((c) => (
-                <li key={c._id} >
+                <li key={c._id}>
                   <NavLink className="nav-link" to={`/category/${c.slug}`}>
                     {c.name}
                   </NavLink>
@@ -54,6 +70,12 @@ const Menu = () => {
               ))}
             </ul>
           </div>
+        </li>
+
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/shop">
+            Shop
+          </NavLink>
         </li>
         <li className="nav-item mt-1 ml-1">
           <Badge
@@ -66,21 +88,6 @@ const Menu = () => {
             </NavLink>
           </Badge>
         </li>
-        <li className="nav-item">
-          <Search />
-        </li>
-
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/">
-            Home
-          </NavLink>
-        </li>
-        <li className="nav-item">
-          <NavLink className="nav-link" to="/shop">
-            Shop
-          </NavLink>
-        </li>
-
         {!auth?.user ? (
           <>
             <li className="nav-item">
