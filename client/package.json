@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.1.6",
     "axios": "^1.2.2",
+    "braintree-web-drop-in-react": "^1.2.1",
     "env-cmd": "^10.1.0",
     "moment": "^2.29.4",
     "next-images": "^1.8.4",
